@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<title>Atrrition-Prediction App</title>
+<body>
+
+<form action = "/api" method="POST">
+    <p> Input Age:<input name="age" id="age" type ="text"  /> </p>
+    <p> Input Distace From Home (in minute): <input name="distance_from_home" id="distance_from_home" type ="text"  /> </p>
+    <p> Input Environment Satisfaction (scale 0 to 5): <input name="environment_satisfaction" id="environment_satisfaction" type = "text"  /> </p>
+    <p> Input Job Involvement (scale 0 to 5) :<input name="job_involvement" id="job_involvement" type ="text"  /> </p>
+    <p> Input Job Satisfaction (scale 0 to 5): <input name="job_satisfaction" type ="text" id="job_satisfaction"  /> </p>
+    <p> Input Job Monthly Income : <input name="monthly_income" type ="text" id="monthly_income"  /> </p>
+    <p> Input Numbers Companies Worked : <input name="num_companies_worked" type ="text" id="num_companies_worked" /> </p>
+    <p> Input Job Performance Rating (scale 0 to 5): <input name="performance_rating" id="performance_rating" type ="text"  /> </p>
+    <p> Input Job Relationship Satisfaction (scale 0 to 5): <input name="relationship_satisfaction" id="relationship_satisfaction" type ="text"  /> </p>
+    <p> Input Job Total Working Years : <input name="total_working_years" id="total_working_years" type ="text"  /> </p>
+    <p> Input Job Training Times LastYear : <input name="training_times_last_year" id="training_times_last_year" type ="text" /> </p>
+    <p> Input Job Work Life Balance (scale 0 to 5): <input name="work_life_balance" id="work_life_balance" type ="text"  /> </p>
+    <p> Input Job Years At Company : <input name="years_at_company" id="years_at_company" type ="text"  /> </p>
+    <p> Input Job Years In Current Role: <input name="years_in_current_role" id="years_in_current_role" type ="text"  /> </p>
+    <p> Input Job Years Since Last Promotion : <input name="years_since_last_promotion" id="years_since_last_promotion" type ="text"  /> </p>
+    <p> Input Job Years With Curr Manager : <input name="years_with_curr_manager" id="years_with_curr_manager" type ="text"  /> </p>
+    
+
+    <p> <input type ="submit" value="submit" id="predict" /> </p>
+    <script type="text/javascript">
+        $(function () {
+            $("#predict").click(function(e){
+                e.preventDefault();
+                /*Get for variabes*/
+                var age = $("#age").val(), distance_from_home = $("#distance_from_home").val(), environment_satisfaction = $("#environment_satisfaction").val(), job_involvement = $("#job_involvement").val(), job_satisfaction = $("#job_satisfaction").val(), monthly_income = $("#monthly_income").val(), num_companies_worked = $("#num_companies_worked").val(), performance_rating = $("#performance_rating").val(), relationship_satisfaction = $("#relationship_satisfaction").val(), total_working_years = $("#total_working_years").val(), training_times_last_year = $("#training_times_last_year").val(), work_life_balance = $("#work_life_balance").val(), years_at_company = $("#years_at_company").val(), years_in_current_role = $("#years_in_current_role").val(),  years_since_last_promotion = $("#age").val(),  years_with_curr_manager = $("#years_with_curr_manager").val()  ;
+               
+
+                /*create the JSON object*/
+                var data = {'age':age,
+                      'distance_from_home' : distance_from_home,
+                      'environment_satisfaction' : environment_satisfaction,
+                      'job_involvement' : job_involvement,
+                      'job_satisfaction' : job_satisfaction,
+                      'monthly_income' : monthly_income,
+                      'num_companies_worked' : num_companies_worked,
+                      'performance_rating' : performance_rating,
+                      'relationship_satisfaction' : relationship_satisfaction,
+                      'total_working_years' : total_working_years,
+                      'training_times_last_year' : training_times_last_year,
+                      'work_life_balance' : work_life_balance,
+                      'years_at_company' : years_at_company,
+                      'years_in_current_role' : years_in_current_role,
+                      'years_since_last_promotion' : years_since_last_promotion,
+                      'years_with_curr_manager' : years_with_curr_manager
+                    }
+
+                /*send the ajax request*/
+                $.ajax({
+                    method : "POST",
+                    url : window.location.href + 'prediction',
+                    data : $('form').serialize(),
+                    success : function(result){
+                        var json_result = JSON.parse(result);
+                        var prediction = json_result['prediction'];
+                        swal('Prediction is: '+prediction + '','success')
+                    },
+                    error : function(){
+                        console.log("error")
+                    }
+                })
+            })
+        
+        });
+    </script>
+</form>
+</body>
+</html>
