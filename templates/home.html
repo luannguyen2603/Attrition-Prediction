@@ -23,6 +23,11 @@
     
 
     <p> <input type ="submit" value="submit" id="predict" /> </p>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#predict").click(function(e){
@@ -53,12 +58,14 @@
                 /*send the ajax request*/
                 $.ajax({
                     method : "POST",
-                    url : window.location.href + 'prediction',
+                    url : window.location.href + 'api',
                     data : $('form').serialize(),
                     success : function(result){
                         var json_result = JSON.parse(result);
                         var prediction = json_result['prediction'];
-                        swal('Prediction is: '+prediction + '','success')
+                        if (prediction == 1){
+                        swal("Employee will get attrition " , " "  ,"success")}
+                        else{swal("Employee will not get attrition " , " "  ,"success")}
                     },
                     error : function(){
                         console.log("error")
